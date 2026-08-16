@@ -1,3 +1,4 @@
+```mermaid
 erDiagram
 
     %% ----------------------------------------------------
@@ -419,3 +420,4 @@ erDiagram
         int idLevelLimit FK
         date fechaCreacion
     }
+```
