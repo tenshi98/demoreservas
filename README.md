@@ -1,6 +1,6 @@
-# Plataforma coreEngine
+# Plataforma Reservas
 
-Plataforma Básica enfocada al manejo e interacción con los distintos módulos instalados, algunos independientes de otros, y otros dependientes de la instalación de otros módulos.
+Demo de funcionalidad de la plataforma de reservas
 
 ---
 
@@ -31,6 +31,8 @@ Plataforma Básica enfocada al manejo e interacción con los distintos módulos 
 ---
 
 ## Resumen de la Plataforma
+
+Plataforma Básica enfocada al manejo e interacción con los distintos módulos instalados, algunos independientes de otros, y otros dependientes de la instalación de otros módulos.
 
 Esta plataforma está diseñada específicamente para **pequeñas y medianas empresas (PyMEs)** con infraestructura de alojamiento estándar, compatible con entornos **LAMP/LEMP** (servidores **Apache o Nginx**, **PHP** y **MySQL**).
 
@@ -311,7 +313,7 @@ El backend está construido con un enfoque modular y arquitectura MVC. A continu
 
 ### Crecimiento Significativo del Volumen de Usuarios
 
-La plataforma ha sido concebida con una arquitectura ligera basada en **Fat-Free Framework (F3)**, lo que le permite mantener un consumo mínimo de memoria RAM (~1-2 MB por petición) y una latencia baja en comparación con frameworks monolíticos tradicionales. 
+La plataforma ha sido concebida con una arquitectura ligera basada en **Fat-Free Framework (F3)**, lo que le permite mantener un consumo mínimo de memoria RAM (~1-2 MB por petición) y una latencia baja en comparación con frameworks monolíticos tradicionales.
 
 Para escalar ante un incremento masivo en el tráfico y volumen de usuarios activos, la estrategia de evolución comprende las siguientes fases:
 
