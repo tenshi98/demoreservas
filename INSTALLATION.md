@@ -1,20 +1,59 @@
 # Guía de Instalación y Configuración
 
-Este documento contiene las instrucciones necesarias para la configuración inicial y despliegue seguro del proyecto **Plataforma coreEngine / Sistema Reservas**.
+Este documento contiene las instrucciones necesarias para la configuración inicial, importación de base de datos y despliegue seguro del proyecto **Plataforma coreEngine / Sistema Reservas**.
 
 ---
 
 ## Tabla de Contenidos
 
-- [1. Configuración de la Aplicación (ConfigAPP.php)](#1-configuración-de-la-aplicación-configappphp)
-- [2. Configuración de Base de Datos (ConfigData.php)](#2-configuración-de-base-de-datos-configdataphp)
-- [3. Configuración de Correo Electrónico (ConfigMail.php)](#3-configuración-de-correo-electrónico-configmailphp)
-- [4. Configuración Segura de Permisos de Almacenamiento (upload)](#4-configuración-segura-de-permisos-de-almacenamiento-upload)
-- [5. Verificación Final](#5-verificación-final)
+- [1. Importación de la Base de Datos (sistemas_reservas.sql)](#1-importación-de-la-base-de-datos-sistemas_reservassql)
+- [2. Configuración de la Aplicación (ConfigAPP.php)](#2-configuración-de-la-aplicación-configappphp)
+- [3. Configuración de Base de Datos (ConfigData.php)](#3-configuración-de-base-de-datos-configdataphp)
+- [4. Configuración de Correo Electrónico (ConfigMail.php)](#4-configuración-de-correo-electrónico-configmailphp)
+- [5. Configuración Segura de Permisos de Almacenamiento (upload)](#5-configuración-segura-de-permisos-de-almacenamiento-upload)
+- [6. Verificación Final](#6-verificación-final)
 
 ---
 
-## 1. Configuración de la Aplicación (`ConfigAPP.php`)
+## 1. Importación de la Base de Datos (`sistemas_reservas.sql`)
+
+Ubicación del archivo de respaldo SQL:
+`bbdd/sistemas_reservas.sql`
+
+Antes de configurar la aplicación, se debe crear e importar el esquema y los datos iniciales de la base de datos en el servidor MySQL / MariaDB.
+
+### Pasos de Importación:
+
+1. **Creación de la Base de Datos:**
+   Conéctate a tu servidor MySQL a través de la terminal o tu gestor de base de datos preferido (phpMyAdmin, DBeaver, MySQL Workbench) y crea la base de datos vacía utilizando el cotejamiento `utf8mb4`:
+   ```sql
+   CREATE DATABASE IF NOT EXISTS `sistemas_reservas` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   ```
+
+2. **Ejecución de la Importación:**
+
+   - **Vía Terminal / Línea de Comandos (Linux / macOS / Windows):**
+     Navega a la raíz del proyecto y ejecuta el comando de importación:
+     ```bash
+     mysql -u [usuario_mysql] -p sistemas_reservas < bbdd/sistemas_reservas.sql
+     ```
+     *(Reemplaza `[usuario_mysql]` por tu usuario con privilegios de administración, por ejemplo `root`).*
+
+   - **Vía Entornos Docker:**
+     Si estás corriendo MySQL dentro de un contenedor Docker, puedes ejecutar:
+     ```bash
+     docker exec -i [nombre_o_id_contenedor_mysql] mysql -u root -p[contraseña] sistemas_reservas < bbdd/sistemas_reservas.sql
+     ```
+
+   - **Vía phpMyAdmin / Herramientas Gráficas:**
+     1. Accede a phpMyAdmin y selecciona la base de datos `sistemas_reservas`.
+     2. Haz clic en la pestaña **Importar** (*Import*).
+     3. Selecciona el archivo `bbdd/sistemas_reservas.sql` ubicado en la carpeta del proyecto.
+     4. Haz clic en **Continuar** (*Go*) para procesar las tablas y datos del sistema.
+
+---
+
+## 2. Configuración de la Aplicación (`ConfigAPP.php`)
 
 Ubicación del archivo:
 `plataforma/sistemas_reservas/app/config/ConfigAPP.php`
@@ -53,7 +92,7 @@ Este archivo centraliza la configuración global del software, parámetros de se
 
 ---
 
-## 2. Configuración de Base de Datos (`ConfigData.php`)
+## 3. Configuración de Base de Datos (`ConfigData.php`)
 
 Ubicación del archivo:
 `plataforma/sistemas_reservas/app/config/ConfigData.php`
@@ -79,7 +118,7 @@ En este archivo se especifican las credenciales para la conexión persistente co
 
 ---
 
-## 3. Configuración de Correo Electrónico (`ConfigMail.php`)
+## 4. Configuración de Correo Electrónico (`ConfigMail.php`)
 
 Ubicación del archivo:
 `plataforma/sistemas_reservas/app/config/ConfigMail.php`
@@ -110,7 +149,7 @@ Este archivo contiene las credenciales de los servicios de mensajería y correo 
 
 ---
 
-## 4. Configuración Segura de Permisos de Almacenamiento (`upload`)
+## 5. Configuración Segura de Permisos de Almacenamiento (`upload`)
 
 Ubicación del directorio:
 `plataforma/sistemas_reservas/public/upload`
@@ -163,7 +202,7 @@ Para prevenir vulnerabilidades de ejecución arbitraria de archivos o denegació
 
 ---
 
-## 5. Verificación Final
+## 6. Verificación Final
 
 Una vez realizadas las modificaciones:
 
