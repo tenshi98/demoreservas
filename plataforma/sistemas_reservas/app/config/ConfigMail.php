@@ -9,9 +9,9 @@ class ConfigMail{
         'SERVERURL'    => 'smtp.titan.email',
         'SERVERPORT'   => 465,
         'SERVERSECURE' => 'SSL',
-        'USEREMAIL'    => 'contacto@digitalcreations.cl',
-        'USERNAME'     => 'contacto',
-        'PASSWORD'     => '$C\.BA|X9 I<PZ0',
+        'USEREMAIL'    => 'joebloggs@gmail.com',
+        'USERNAME'     => 'joebloggs',
+        'PASSWORD'     => 'mypass',
     ];
     /*****************************************************/
     //Variables globales del servidor

@@ -916,10 +916,10 @@ class ControllerBase {
     protected function searchValidateDates($WhereData){
 
         /********************** Si todo esta ok **********************/
-        // Inicializa el contenedor para las partes de la consulta
-        $parts    = [];
         // Ejecuta la lógica solo si se proporcionaron campos para filtrar
-        if($WhereData!=''){
+        if(isset($WhereData)&&$WhereData!=''){
+            // Inicializa el contenedor para las partes de la consulta
+            $parts    = [];
             // Convierte la cadena de campos separados por comas en un array usable
             $arrWhere = $this->CommonData->parseDataCommas($WhereData); //Separacion por comas
             //Se recorren los datos separados
@@ -927,7 +927,7 @@ class ControllerBase {
                 // Descompone la configuración del campo (espera: campo-post_inicio-post_fin)
                 $arrData = $this->CommonData->parseDataSeparator($field); //Separacion por guiones
                 // Verifica que ambos límites del rango existan en el POST
-                if (!empty($_POST[$arrData[1]])&&!empty($_POST[$arrData[2]])) {
+                if (isset($_POST[$arrData[1]], $_POST[$arrData[2]])&&!empty($_POST[$arrData[1]])&&!empty($_POST[$arrData[2]])) {
                     // Compara los datos 'Inicio' AND 'Fin'
                     try {
                         $inicio = new DateTime($_POST[$arrData[1]]);
@@ -942,18 +942,18 @@ class ControllerBase {
                         // Registra un error cuando alguno de los valores no puede interpretarse como fecha
                         $parts[] = 'Formato de fecha inválido.';
                     }
-                }else{
-                    // Registra un error cuando falta alguno de los límites del rango de fechas
-                    $parts[] = 'Falta uno de los datos.';
                 }
             }
+            /**********************  Retorno datos  **********************/
+            // Une todas las partes generadas mediante el una coma
+            $returnData   = $parts ? implode(', ', $parts) : '';
+            // Retorna la respuesta
+            return ($returnData != '') ? $returnData : '';
+
         }
 
-        /**********************  Retorno datos  **********************/
-        // Une todas las partes generadas mediante el una coma
-        $returnData   = $parts ? implode(', ', $parts) : '';
-        // Retorna la respuesta
-        return ($returnData != '') ? $returnData : '';
+        // Retorna vacio por defecto
+        return '';
     }
 
 
