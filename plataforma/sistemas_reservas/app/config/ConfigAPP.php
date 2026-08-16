@@ -1,0 +1,99 @@
+<?php
+/*******************************************************************************************************************/
+/*                                              Se define la clase                                                 */
+/*******************************************************************************************************************/
+class ConfigAPP{
+
+    //Datos del Software
+    const SOFTWARE = [
+        'SoftwareName'    => 'Sistema Reservas',                                      //Nombre del software
+        'SoftwareSlogan'  => 'Sistema de Reservas de Espacios',                       //Slogan del software
+        'CompanyName'     => 'Pontificia Universidad Católica de Chile',              //Nombre de la compañia
+        'CompanyEmail'    => 'coreEngine@coreEngine.cl',                              //Email de la compañia
+        'CompanyCredits'  => '',                                                      //Creditos
+        'URL'             => 'http://localhost/coreEngine/sistemas_reservas/public/', //URL
+    ];
+
+    //Configuracion de la aplicacion
+    const APP = [
+
+        /***********************************************************************
+         * Numero maximo de registros sin paginar
+         * Por defecto 1000 antes de paginar
+         **********************************************************************/
+        'N_MaxItems'              => 2000,
+
+        /***********************************************************************
+         * Seguridad
+         * checkBruteConections: Numero maximo de intentos de login fallidos antes de banear
+         * checkBruteMaxConections: Numero maximo de intentos de login fallidos antes de enviar a la lista negra
+         **********************************************************************/
+        'checkBruteConections'    => 5,
+        'checkBruteMaxConections' => 20,
+
+        /***********************************************************************
+         * SELECCIÓN DE DRIVER
+         * Valores: 'local' | 's3' | 'gcs' | 'sftp'
+         **********************************************************************/
+        'uploadServer' => 'local',
+
+        /***********************************************************************
+         * LOCAL — Sistema de archivos del servidor Apache/Nginx
+         * Driver: LocalStorageDriver
+         * Requiere: Ninguna librería externa
+         **********************************************************************/
+        'uploadFolder' => __DIR__ . '/../../../sistemas_reservas/public/upload/',  // Ruta absoluta en disco
+        'uploadUrl'    => self::SOFTWARE['URL'].'upload',                          // URL pública base (sin slash final)
+
+        /***********************************************************************
+         * AMAZON S3 (o servicios compatibles: MinIO, DigitalOcean Spaces,
+         *             Cloudflare R2, Backblaze B2, Wasabi)
+         * Driver: S3StorageDriver
+         * Librería: coreEngine/vendors/libs/aws-sdk/
+         *   Instalación: cd coreEngine/vendors/libs/aws-sdk
+         *                composer require aws/aws-sdk-php
+         **********************************************************************/
+        's3Key'       => 'AKIAIOSFODNN7EXAMPLE',                // IAM Access Key ID
+        's3Secret'    => 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYKEY',   // IAM Secret Access Key
+        's3Region'    => 'us-east-1',                           // Región AWS (ej: sa-east-1 para São Paulo)
+        's3Bucket'    => 'mi-bucket-produccion',                // Nombre del bucket
+        's3Prefix'    => 'uploads',                             // Prefijo global (carpeta raíz en el bucket)
+        's3Endpoint'  => '',                                    // Solo para S3-compatible (ej: 'https://minio.miapp.com')
+        's3Acl'       => 'private',                             // 'private' | 'public-read'
+        's3UrlSigned' => true,                                  // true = URLs pre-firmadas (seguro)
+        's3UrlExpiry' => 3600,                                  // Segundos de validez de la URL firmada
+
+        /***********************************************************************
+         * GOOGLE CLOUD STORAGE (GCS)
+         * Driver: GCSStorageDriver
+         * Librería: coreEngine/vendors/libs/gcs-sdk/
+         *   Instalación: cd coreEngine/vendors/libs/gcs-sdk
+         *                composer require google/cloud-storage
+         **********************************************************************/
+        'gcsProjectId' => 'mi-proyecto-gcp',                            // ID del proyecto en GCP
+        'gcsKeyFile'   => __DIR__ . '/keys/service-account.json',       // Ruta al JSON de cuenta de servicio
+        'gcsBucket'    => 'mi-bucket-gcs',                              // Nombre del bucket GCS
+        'gcsPrefix'    => 'uploads',                                    // Prefijo global dentro del bucket
+        'gcsUrlSigned' => true,                                         // true = URLs firmadas
+        'gcsUrlExpiry' => 3600,                                         // Segundos de validez (firmadas)
+
+        /***********************************************************************
+         * SFTP — Servidor remoto vía SSH File Transfer Protocol
+         * Driver: SFTPStorageDriver
+         * Librería: coreEngine/vendors/libs/sftp-sdk/
+         *   Instalación: cd coreEngine/vendors/libs/sftp-sdk
+         *                composer require phpseclib/phpseclib:~3.0
+         **********************************************************************/
+        'sftpHost'       => 'sftp.ejemplo.com',                             // Hostname o IP del servidor
+        'sftpPort'       => 22,                                             // Puerto SSH (default: 22)
+        'sftpUser'       => 'deploy_user',                                  // Usuario SSH
+        'sftpPassword'   => 'contraseña_segura',                            // Password (vacío si usa clave privada)
+        'sftpPrivateKey' => __DIR__ . '/keys/id_rsa',                       // Ruta a clave privada RSA (opcional)
+        'sftpKeyPass'    => '',                                             // Passphrase de la clave privada (si aplica)
+        'sftpTimeout'    => 30,                                             // Timeout de conexión en segundos
+        'sftpBasePath'   => '/var/www/html/sistemas_reservas/public/upload',// Ruta absoluta en el servidor remoto
+        'sftpBaseUrl'    => 'https://cdn.ejemplo.com/uploads',              // URL pública base (para getFileUrl())
+
+    ];
+
+}

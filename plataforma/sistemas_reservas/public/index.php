@@ -1,0 +1,73 @@
+<?php
+/**********************************************************************************************************************************/
+/*                                                       Include classes                                                          */
+/**********************************************************************************************************************************/
+/**********************   Componentes   **********************/
+//Se cargan componentes de la plataforma
+$Autoload = '../../vendors/application/controller/;'; //Controladores
+$Autoload.= ' ../../vendors/application/models/;';    //Modelos
+$Autoload.= ' ../../vendors/application/utils/;';     //Utilidades
+$Autoload.= ' ../../vendors/application/functions/;'; //Funciones
+$Autoload.= ' ../app/helpers/;';                      //Helpers
+$Autoload.= ' ../app/config/;';                       //Configuraciones
+
+/**********************     Modulos     **********************/
+//Se listan las carpetas con los modulos
+$arrDirectory   = array();
+$arrDirectory[] = '../app/modules/';  //Modulos de la plataforma
+
+/**********************      Rutas      **********************/
+//recorro las carpetas
+foreach ($arrDirectory as $x_Directory) {
+    //Se escanea la carpeta con los modulos
+    $x_List = array_diff(scandir($x_Directory), ['.', '..', '.htaccess']);
+    //se agregan las rutas
+    foreach ($x_List as $list) {
+        $Autoload .= ' ' . $x_Directory . '/' . $list . '/controller/;';
+    }
+}
+
+//Base
+$f3 = require_once('../../vendors/fatfree/base.php'); //Base
+$f3->set('AUTOLOAD',$Autoload);                       //Autoload
+
+/**********************************************************************************************************************************/
+/*                                                          Variables                                                             */
+/**********************************************************************************************************************************/
+// Establecer la zona horaria predeterminada a usar.
+date_default_timezone_set('America/Santiago');
+//Se instancian otros controladores
+$validateSession = new validateSession();
+
+/*******************************************************/
+//Se verifica token
+$cookieToken = isset($_COOKIE['Sesion_tk_'.date("Y-m-d")])
+             ? $_COOKIE['Sesion_tk_'.date("Y-m-d")]
+             : false;
+
+/*******************************************************/
+//Se verifica si existen datos
+$UserSesion   = (!$f3->get('SESSION.TokenUser') || !$f3->get('SESSION.TokenExpires'))
+                ? $validateSession->checkLogin($cookieToken, $f3, getallheaders())
+                : $validateSession->validateSession($cookieToken, $f3, getallheaders());
+
+/**********************************************************************************************************************************/
+/*                                                        Usuarios Logueados                                                      */
+/**********************************************************************************************************************************/
+//Solo si esta activa la sesion
+if($UserSesion===true){
+
+    require_once('../app/utils/userAdmin.php');              //Rutas de los administradores
+    require_once('../app/utils/userData.php');               //Rutas de los usuarios normales
+    require_once('../app/utils/sistemaFuncionalidad.php');   //Funcionalidad del sistema
+
+}
+/**********************************************************************************************************************************/
+/*                                                       Usuarios Visitantes                                                      */
+/**********************************************************************************************************************************/
+//Rutas de los usuarios no ingresados
+require_once('../app/utils/userGuest.php');  //Rutas de los usuarios no loegueados
+require_once('../app/utils/loadErrors.php'); //Manejo de los errores
+
+//Ejecuta
+$f3->run();
