@@ -229,6 +229,9 @@ class espaciosCategorias extends ControllerBase {
     }
 
     /******************************************************************************/
+    /*                            CONSULTAS INTERNAS                              */
+    /******************************************************************************/
+    /******************************************************************************/
     //Se obtiene la lista
     private function getDataList($filter){
         //Se genera la query

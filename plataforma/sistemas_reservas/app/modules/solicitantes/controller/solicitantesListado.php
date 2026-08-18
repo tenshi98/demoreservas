@@ -211,10 +211,6 @@ class solicitantesListado extends ControllerBase {
     public function View($f3, $params){
 
         /******************************************/
-        //Se instancia
-        $arrUserData = $this->getUserData($f3);
-
-        /******************************************/
         //Se genera la query
         $rowData = $this->getDataDetail($this->Codification->encryptDecrypt('decrypt', $params['id']));
 
@@ -437,6 +433,9 @@ class solicitantesListado extends ControllerBase {
         }
     }
 
+    /******************************************************************************/
+    /*                            CONSULTAS INTERNAS                              */
+    /******************************************************************************/
     /******************************************************************************/
     //Se obtiene la lista
     private function getDataList($filter){
