@@ -39,57 +39,7 @@ class coreSistema extends ControllerBase {
     public function Resumen($f3){
         /******************************************/
         //Se genera la query
-        $query = [
-            'data'    => '
-                core_sistemas.idSistema,
-                core_sistemas.Sistema_Nombre,
-                core_sistemas.Sistema_Email,
-                core_sistemas.Sistema_Rut,
-                core_sistemas.Sistema_idCiudad,
-                core_sistemas.Sistema_idComuna,
-                core_sistemas.Sistema_Direccion,
-                core_sistemas.Sistema_IMGLogo,
-                core_sistemas.Sistema_idTema,
-                core_sistemas.Contacto_Nombre,
-                core_sistemas.Contacto_Fono1,
-                core_sistemas.Contacto_Fono2,
-                core_sistemas.Contacto_Fax,
-                core_sistemas.Contacto_Email,
-                core_sistemas.Contacto_Web,
-                core_sistemas.RepresentanteNombre,
-                core_sistemas.RepresentanteRut,
-                core_sistemas.RepresentanteFono,
-                core_sistemas.RepresentanteEmail,
-                core_sistemas.Config_API_GoogleMaps,
-                core_sistemas.Latitud,
-                core_sistemas.Longitud,
-                core_sistemas.Social_X,
-                core_sistemas.Social_Facebook,
-                core_sistemas.Social_Instagram,
-                core_sistemas.Social_Linkedin,
-                core_sistemas.Latitud,
-                core_sistemas.Longitud,
-                core_sistemas.Config_Principal_Meteo,
-                core_sistemas.Config_Principal_Radio,
-                core_sistemas.Config_Principal_Feed,
-                core_sistemas.Config_Principal_FeedURL,
-
-                core_ubicacion_ciudad.Nombre AS Ciudad,
-                core_ubicacion_comunas.Nombre AS Comuna,
-                core_temas.Nombre AS Tema',
-            'table'   => 'core_sistemas',
-            'join'    => '
-                LEFT JOIN core_ubicacion_ciudad  ON core_ubicacion_ciudad.idCiudad        = core_sistemas.Sistema_idCiudad
-                LEFT JOIN core_ubicacion_comunas ON core_ubicacion_comunas.idComuna       = core_sistemas.Sistema_idComuna
-                LEFT JOIN core_temas             ON core_temas.idTema                     = core_sistemas.Sistema_idTema',
-            'where'   => 'core_sistemas.idSistema = "1"',
-            'group'   => '',
-            'having'  => '',
-            'order'   => ''
-        ];
-        //Ejecuto la query
-        $xParams = ['query' => $query];
-        $rowData = $this->Base_GetByID($xParams);
+        $rowData = $this->getDataDetail();
 
         /******************************/
         //Se genera la query
@@ -170,6 +120,48 @@ class coreSistema extends ControllerBase {
     public function ResumenUpdate($f3){
         /******************************************/
         //Se genera la query
+        $rowData = $this->getDataDetail();
+
+        /*******************************************************************/
+        /*                         Imprimir Datos                          */
+        /*******************************************************************/
+        //Si hay resultados
+        if($rowData['status']){
+            /******************************************/
+            //Datos enviados a la pagina
+            $f3->data = [
+                /*===========  Datos del usuario ===========*/
+                'UserData'      => $this->getUserData($f3),
+                'UserAccess'    => $this->getArrLevel($f3, $this->controllerName),
+                /*===========   Funcionalidad   ===========*/
+                'Fnc_DataDate'         => $this->DataDate,
+                'Fnc_DataNumbers'      => $this->DataNumbers,
+                'Fnc_WidgetsCommon'    => $this->WidgetsCommon,
+                'Fnc_WidgetsMaps'      => new UIWidgetsMaps(),
+                /*=========== Datos Consultados ===========*/
+                'rowData'          => $rowData['data'],
+            ];
+
+            /******************************************/
+            //Se instancia la vista
+            $this->showVista(2, $this->returnRutaVista(__DIR__, 'app').'/'.$this->controllerName.'-Resumen-Update.php');
+        /*******************************************************************/
+        //si no hay resultados
+        } else {
+            //Busco errores de la consulta
+            $result = $this->mergeResponses([$rowData]);
+            //Muestra los errores
+            $this->showError(2, $f3, $result);
+        }
+    }
+
+    /******************************************************************************/
+    /*                            CONSULTAS INTERNAS                              */
+    /******************************************************************************/
+    /******************************************************************************/
+    //Se obtienen los detalles
+    private function getDataDetail(){
+        //Se genera la query
         $query = [
             'data'    => '
                 core_sistemas.idSistema,
@@ -220,39 +212,8 @@ class coreSistema extends ControllerBase {
         ];
         //Ejecuto la query
         $xParams = ['query' => $query];
-        $rowData = $this->Base_GetByID($xParams);
-
-        /*******************************************************************/
-        /*                         Imprimir Datos                          */
-        /*******************************************************************/
-        //Si hay resultados
-        if($rowData['status']){
-            /******************************************/
-            //Datos enviados a la pagina
-            $f3->data = [
-                /*===========  Datos del usuario ===========*/
-                'UserData'      => $this->getUserData($f3),
-                'UserAccess'    => $this->getArrLevel($f3, $this->controllerName),
-                /*===========   Funcionalidad   ===========*/
-                'Fnc_DataDate'         => $this->DataDate,
-                'Fnc_DataNumbers'      => $this->DataNumbers,
-                'Fnc_WidgetsCommon'    => $this->WidgetsCommon,
-                'Fnc_WidgetsMaps'      => new UIWidgetsMaps(),
-                /*=========== Datos Consultados ===========*/
-                'rowData'          => $rowData['data'],
-            ];
-
-            /******************************************/
-            //Se instancia la vista
-            $this->showVista(2, $this->returnRutaVista(__DIR__, 'app').'/'.$this->controllerName.'-Resumen-Update.php');
-        /*******************************************************************/
-        //si no hay resultados
-        } else {
-            //Busco errores de la consulta
-            $result = $this->mergeResponses([$rowData]);
-            //Muestra los errores
-            $this->showError(2, $f3, $result);
-        }
+        //Se retornan los datos
+        return $this->Base_GetByID($xParams);
     }
 
     /******************************************************************************/

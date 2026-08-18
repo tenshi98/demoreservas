@@ -137,18 +137,7 @@ class unidadesListado extends ControllerBase {
     public function View($f3, $params){
         /******************************************/
         //Se genera la query
-        $query = [
-            'data'    => 'Nombre',
-            'table'   => 'unidades_listado',
-            'join'    => '',
-            'where'   => 'idUnidades = "'.$this->Codification->encryptDecrypt('decrypt', $params['id']).'"',
-            'group'   => '',
-            'having'  => '',
-            'order'   => ''
-        ];
-        //Ejecuto la query
-        $xParams = ['query' => $query];
-        $rowData = $this->Base_GetByID($xParams);
+        $rowData = $this->getDataDetail($this->Codification->encryptDecrypt('decrypt', $params['id']));
 
         /*******************************************************************/
         /*                         Imprimir Datos                          */
@@ -185,18 +174,7 @@ class unidadesListado extends ControllerBase {
     public function GetID($f3, $params){
         /******************************************/
         //Se genera la query
-        $query = [
-            'data'    => 'idUnidades,Nombre',
-            'table'   => 'unidades_listado',
-            'join'    => '',
-            'where'   => 'idUnidades = "'.$this->Codification->encryptDecrypt('decrypt', $params['id']).'"',
-            'group'   => '',
-            'having'  => '',
-            'order'   => ''
-        ];
-        //Ejecuto la query
-        $xParams = ['query' => $query];
-        $rowData = $this->Base_GetByID($xParams);
+        $rowData = $this->getDataDetail($this->Codification->encryptDecrypt('decrypt', $params['id']));
 
         /*******************************************************************/
         /*                         Imprimir Datos                          */
@@ -229,6 +207,9 @@ class unidadesListado extends ControllerBase {
     }
 
     /******************************************************************************/
+    /*                            CONSULTAS INTERNAS                              */
+    /******************************************************************************/
+    /******************************************************************************/
     //Se obtiene la lista
     private function getDataList($filter){
         //Se genera la query
@@ -246,6 +227,25 @@ class unidadesListado extends ControllerBase {
         $xParams = ['query' => $query];
         //Se retornan los datos
         return $this->Base_GetList($xParams);
+    }
+
+    /******************************************************************************/
+    //Se obtienen los detalles
+    private function getDataDetail($ID){
+        //Se genera la query
+        $query = [
+            'data'    => 'idUnidades,Nombre',
+            'table'   => 'unidades_listado',
+            'join'    => '',
+            'where'   => 'idUnidades = "'.$ID.'"',
+            'group'   => '',
+            'having'  => '',
+            'order'   => ''
+        ];
+        //Ejecuto la query
+        $xParams = ['query' => $query];
+        //Se retornan los datos
+        return $this->Base_GetByID($xParams);
     }
 
     /******************************************************************************/
