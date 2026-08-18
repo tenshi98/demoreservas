@@ -11,7 +11,7 @@
  Target Server Version : 110803 (11.8.3-MariaDB-ubu2404)
  File Encoding         : 65001
 
- Date: 16/08/2026 16:52:28
+ Date: 18/08/2026 13:20:23
 */
 
 SET NAMES utf8mb4;
@@ -1047,6 +1047,7 @@ CREATE TABLE `estados_listado` (
   `idEstadoReserva` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(255) NOT NULL,
   `Color` varchar(255) NOT NULL,
+  `ColorClaro` varchar(255) NOT NULL,
   PRIMARY KEY (`idEstadoReserva`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=DYNAMIC COMMENT='Creado desde el Instalador';
 
@@ -1054,11 +1055,11 @@ CREATE TABLE `estados_listado` (
 -- Records of estados_listado
 -- ----------------------------
 BEGIN;
-INSERT INTO `estados_listado` (`idEstadoReserva`, `Nombre`, `Color`) VALUES (1, 'Ingresada', '#1c71d8');
-INSERT INTO `estados_listado` (`idEstadoReserva`, `Nombre`, `Color`) VALUES (2, 'En Revision', '#f5c211');
-INSERT INTO `estados_listado` (`idEstadoReserva`, `Nombre`, `Color`) VALUES (3, 'Aprobada', '#26a269');
-INSERT INTO `estados_listado` (`idEstadoReserva`, `Nombre`, `Color`) VALUES (4, 'Rechazada', '#e01b24');
-INSERT INTO `estados_listado` (`idEstadoReserva`, `Nombre`, `Color`) VALUES (5, 'Ejecutada', '#813d9c');
+INSERT INTO `estados_listado` (`idEstadoReserva`, `Nombre`, `Color`, `ColorClaro`) VALUES (1, 'Ingresada', '#1c71d8', '#C8DEF8');
+INSERT INTO `estados_listado` (`idEstadoReserva`, `Nombre`, `Color`, `ColorClaro`) VALUES (2, 'En Revision', '#f5c211', '#FDF4D5');
+INSERT INTO `estados_listado` (`idEstadoReserva`, `Nombre`, `Color`, `ColorClaro`) VALUES (3, 'Aprobada', '#26a269', '#A9EBCD');
+INSERT INTO `estados_listado` (`idEstadoReserva`, `Nombre`, `Color`, `ColorClaro`) VALUES (4, 'Rechazada', '#e01b24', '#F9CED0');
+INSERT INTO `estados_listado` (`idEstadoReserva`, `Nombre`, `Color`, `ColorClaro`) VALUES (5, 'Ejecutada', '#813d9c', '#DBBFE6');
 COMMIT;
 
 -- ----------------------------
@@ -1352,16 +1353,12 @@ CREATE TABLE `usuarios_accesos` (
   `idEstado` int(10) unsigned NOT NULL,
   PRIMARY KEY (`idAcceso`) USING BTREE,
   KEY `fk_Usuario` (`idUsuario`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Limpiar al entregar';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Limpiar al entregar';
 
 -- ----------------------------
 -- Records of usuarios_accesos
 -- ----------------------------
 BEGIN;
-INSERT INTO `usuarios_accesos` (`idAcceso`, `idUsuario`, `Fecha`, `Hora`, `DateTime`, `IP_Client`, `Agent_Transp`, `idSistema`, `token`, `expiration_date`, `idEstado`) VALUES (1, 2, '2026-08-16', '11:21:50', '2026-08-16 11:21:50', '172.18.0.1', 'Mozilla Firefox', 1, 'qZLlRezO2CMiTp90A35F', '2026-08-17 11:21:50', 2);
-INSERT INTO `usuarios_accesos` (`idAcceso`, `idUsuario`, `Fecha`, `Hora`, `DateTime`, `IP_Client`, `Agent_Transp`, `idSistema`, `token`, `expiration_date`, `idEstado`) VALUES (2, 3, '2026-08-16', '11:22:31', '2026-08-16 11:22:31', '172.18.0.1', 'Mozilla Firefox', 1, 'p5O1FbuBoEraMq2iy7cR', '2026-08-17 11:22:31', 2);
-INSERT INTO `usuarios_accesos` (`idAcceso`, `idUsuario`, `Fecha`, `Hora`, `DateTime`, `IP_Client`, `Agent_Transp`, `idSistema`, `token`, `expiration_date`, `idEstado`) VALUES (3, 4, '2026-08-16', '11:23:16', '2026-08-16 11:23:16', '172.18.0.1', 'Mozilla Firefox', 1, 'wD7KeSQfqGUJp3XhjgVM', '2026-08-17 11:23:16', 2);
-INSERT INTO `usuarios_accesos` (`idAcceso`, `idUsuario`, `Fecha`, `Hora`, `DateTime`, `IP_Client`, `Agent_Transp`, `idSistema`, `token`, `expiration_date`, `idEstado`) VALUES (4, 5, '2026-08-16', '11:23:56', '2026-08-16 11:23:56', '172.18.0.1', 'Mozilla Firefox', 1, 'pEd2z7eABLUD8tfTcJlH', '2026-08-17 11:23:56', 2);
 COMMIT;
 
 -- ----------------------------
@@ -1419,7 +1416,7 @@ CREATE TABLE `usuarios_listado` (
 -- Records of usuarios_listado
 -- ----------------------------
 BEGIN;
-INSERT INTO `usuarios_listado` (`idUsuario`, `password`, `idTipoUsuario`, `idEstado`, `email`, `Nombre`, `Rut`, `fNacimiento`, `Fono`, `idCiudad`, `idComuna`, `Direccion`, `Direccion_img`, `Ultimo_acceso`, `Social_X`, `Social_Facebook`, `Social_Instagram`, `Social_Linkedin`, `IP_Client`, `Agent_Transp`, `idMenuPosicion`) VALUES (1, 'L25Yb0t6NUhzakJxRGVQMlpUSWYyQT09', 1, 1, 'tenshi98@gmail.com', 'Victor Reyes Galvez', '16.029.464-7', '1985-02-23', '955391914', 13, 331, 'Los Lirios 09362', 'Perfil_1786672709.png', '2026-08-16', 'https://www.google.cl', 'https://www.google.cl', 'https://www.google.cl', 'https://www.google.cl', '172.18.0.1', 'Mozilla Firefox', 2);
+INSERT INTO `usuarios_listado` (`idUsuario`, `password`, `idTipoUsuario`, `idEstado`, `email`, `Nombre`, `Rut`, `fNacimiento`, `Fono`, `idCiudad`, `idComuna`, `Direccion`, `Direccion_img`, `Ultimo_acceso`, `Social_X`, `Social_Facebook`, `Social_Instagram`, `Social_Linkedin`, `IP_Client`, `Agent_Transp`, `idMenuPosicion`) VALUES (1, 'L25Yb0t6NUhzakJxRGVQMlpUSWYyQT09', 1, 1, 'tenshi98@gmail.com', 'Victor Reyes Galvez', '16.029.464-7', '1985-02-23', '955391914', 13, 331, 'Los Lirios 09362', 'Perfil_1786672709.png', '2026-08-18', 'https://www.google.cl', 'https://www.google.cl', 'https://www.google.cl', 'https://www.google.cl', '172.18.0.1', 'Mozilla Firefox', 2);
 INSERT INTO `usuarios_listado` (`idUsuario`, `password`, `idTipoUsuario`, `idEstado`, `email`, `Nombre`, `Rut`, `fNacimiento`, `Fono`, `idCiudad`, `idComuna`, `Direccion`, `Direccion_img`, `Ultimo_acceso`, `Social_X`, `Social_Facebook`, `Social_Instagram`, `Social_Linkedin`, `IP_Client`, `Agent_Transp`, `idMenuPosicion`) VALUES (2, 'SFRjQTFXSnBsNWUrVmNwUHRsVHhSdz09', 1, 1, 'admin@test.cl', 'Administrador', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-08-16', NULL, NULL, NULL, NULL, '172.18.0.1', 'Mozilla Firefox', 2);
 INSERT INTO `usuarios_listado` (`idUsuario`, `password`, `idTipoUsuario`, `idEstado`, `email`, `Nombre`, `Rut`, `fNacimiento`, `Fono`, `idCiudad`, `idComuna`, `Direccion`, `Direccion_img`, `Ultimo_acceso`, `Social_X`, `Social_Facebook`, `Social_Instagram`, `Social_Linkedin`, `IP_Client`, `Agent_Transp`, `idMenuPosicion`) VALUES (3, 'SFRjQTFXSnBsNWUrVmNwUHRsVHhSdz09', 2, 1, 'administrador@test.cl', 'Administrador Sistema', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-08-16', NULL, NULL, NULL, NULL, '172.18.0.1', 'Mozilla Firefox', 2);
 INSERT INTO `usuarios_listado` (`idUsuario`, `password`, `idTipoUsuario`, `idEstado`, `email`, `Nombre`, `Rut`, `fNacimiento`, `Fono`, `idCiudad`, `idComuna`, `Direccion`, `Direccion_img`, `Ultimo_acceso`, `Social_X`, `Social_Facebook`, `Social_Instagram`, `Social_Linkedin`, `IP_Client`, `Agent_Transp`, `idMenuPosicion`) VALUES (4, 'SFRjQTFXSnBsNWUrVmNwUHRsVHhSdz09', 3, 1, 'operador@test.cl', 'Operador', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-08-16', NULL, NULL, NULL, NULL, '172.18.0.1', 'Mozilla Firefox', 2);
