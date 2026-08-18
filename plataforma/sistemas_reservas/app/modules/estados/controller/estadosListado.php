@@ -10,6 +10,7 @@ class estadosListado extends ControllerBase {
     private $FormInputs;
     private $Codification;
     private $WidgetsCommon;
+    private $CommonData;
 
     /******************************************************************************/
     //Constructor
@@ -23,6 +24,7 @@ class estadosListado extends ControllerBase {
 		$this->FormInputs     = new UIFormInputs();
 		$this->Codification   = new FunctionsSecurityCodification();
 		$this->WidgetsCommon  = new UIWidgetsCommon();
+		$this->CommonData     = new FunctionsCommonData();
         /*========== Datos para la clase padre ==========*/
         parent::__construct($DB_conn_1, $queryBuilder, $checkData);
     }
@@ -137,18 +139,7 @@ class estadosListado extends ControllerBase {
     public function View($f3, $params){
         /******************************************/
         //Se genera la query
-        $query = [
-            'data'    => 'Nombre,Color',
-            'table'   => 'estados_listado',
-            'join'    => '',
-            'where'   => 'idEstadoReserva = "'.$this->Codification->encryptDecrypt('decrypt', $params['id']).'"',
-            'group'   => '',
-            'having'  => '',
-            'order'   => ''
-        ];
-        //Ejecuto la query
-        $xParams = ['query' => $query];
-        $rowData = $this->Base_GetByID($xParams);
+        $rowData = $this->getDataDetail($this->Codification->encryptDecrypt('decrypt', $params['id']));
 
         /*******************************************************************/
         /*                         Imprimir Datos                          */
@@ -185,18 +176,7 @@ class estadosListado extends ControllerBase {
     public function GetID($f3, $params){
         /******************************************/
         //Se genera la query
-        $query = [
-            'data'    => 'idEstadoReserva,Color,Nombre',
-            'table'   => 'estados_listado',
-            'join'    => '',
-            'where'   => 'idEstadoReserva = "'.$this->Codification->encryptDecrypt('decrypt', $params['id']).'"',
-            'group'   => '',
-            'having'  => '',
-            'order'   => ''
-        ];
-        //Ejecuto la query
-        $xParams = ['query' => $query];
-        $rowData = $this->Base_GetByID($xParams);
+        $rowData = $this->getDataDetail($this->Codification->encryptDecrypt('decrypt', $params['id']));
 
         /*******************************************************************/
         /*                         Imprimir Datos                          */
@@ -229,11 +209,14 @@ class estadosListado extends ControllerBase {
     }
 
     /******************************************************************************/
+    /*                            CONSULTAS INTERNAS                              */
+    /******************************************************************************/
+    /******************************************************************************/
     //Se obtiene la lista
     private function getDataList($filter){
         //Se genera la query
         $query = [
-            'data'    => 'idEstadoReserva,Color,Nombre',
+            'data'    => 'idEstadoReserva,Nombre,Color,ColorClaro',
             'table'   => 'estados_listado',
             'join'    => '',
             'where'   => $filter,
@@ -249,6 +232,25 @@ class estadosListado extends ControllerBase {
     }
 
     /******************************************************************************/
+    //Se obtienen los detalles
+    private function getDataDetail($ID){
+        //Se genera la query
+        $query = [
+            'data'    => 'idEstadoReserva,Nombre,Color,ColorClaro',
+            'table'   => 'estados_listado',
+            'join'    => '',
+            'where'   => 'idEstadoReserva = "'.$ID.'"',
+            'group'   => '',
+            'having'  => '',
+            'order'   => ''
+        ];
+        //Ejecuto la query
+        $xParams = ['query' => $query];
+        //Se retornan los datos
+        return $this->Base_GetByID($xParams);
+    }
+
+    /******************************************************************************/
     /*                                  DATOS                                     */
     /******************************************************************************/
     /******************************************************************************/
@@ -260,10 +262,16 @@ class estadosListado extends ControllerBase {
         $DataCheck = $this->dataCheck($_POST);
 
         /******************************/
+        //Se genera el color claro
+        if($_POST['Color']){
+            $_POST['ColorClaro'] = $this->CommonData->colorMasClaro($_POST['Color'], 0.40);
+        }
+
+        /******************************/
         //Se genera la query
         $query = [
-            'data'      => 'Nombre,Color',
-            'required'  => 'Nombre,Color',
+            'data'      => 'Nombre,Color,ColorClaro',
+            'required'  => 'Nombre,Color,ColorClaro',
             'unique'    => 'Nombre',
             'encode'    => '',
             'table'     => 'estados_listado',
@@ -296,10 +304,16 @@ class estadosListado extends ControllerBase {
             $DataCheck = $this->dataCheck($_POST);
 
             /******************************/
+            //Se genera el color claro
+            if($_POST['Color']){
+                $_POST['ColorClaro'] = $this->CommonData->colorMasClaro($_POST['Color'], 0.40);
+            }
+
+            /******************************/
             //Se genera la query
             $query = [
-                'data'      => 'idEstadoReserva,Nombre,Color',
-                'required'  => 'Nombre,Color',
+                'data'      => 'idEstadoReserva,Nombre,Color,ColorClaro',
+                'required'  => 'Nombre,Color,ColorClaro',
                 'unique'    => 'Nombre',
                 'encode'    => '',
                 'table'     => 'estados_listado',

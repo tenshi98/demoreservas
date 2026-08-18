@@ -28,7 +28,7 @@
             ['Icon' => '','Titulo' => 'Número de asistentes',   'Texto' => $data['rowData']['NAsistentes'].' Personas'],
             ['Icon' => '','Titulo' => 'Costo Total',            'Texto' => $data['Fnc_DataNumbers']->Valores($data['rowData']['Costo'], 0)],
             ['Icon' => '','Titulo' => 'Centro de Costo',        'Texto' => $data['rowData']['CentroCosto']],
-            ['Icon' => '','Titulo' => 'Estado',                 'Texto' => $data['rowData']['EstadoNombre']],
+            ['Icon' => '','Titulo' => 'Estado',                 'Texto' => '<span class="badge-sp1 badge-sp1-bg-info" style="background-color: '.$data['rowData']['EstadoColorClaro'].';color: '.$data['rowData']['EstadoColor'].'; border: 1px solid '.$data['rowData']['EstadoColor'].';">'.$data['rowData']['EstadoNombre'].'</span>'],
         ];
         $arrData_3 = [
             ['Icon' => '','Titulo' => 'Espacio',  'Texto' => $data['rowData']['Espacio']],

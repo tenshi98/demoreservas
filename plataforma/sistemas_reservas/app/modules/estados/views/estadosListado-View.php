@@ -28,6 +28,7 @@
     <?php
     $arrData = [
         ['Icon' => '','Titulo' => 'Nombre',    'Texto' => $data['rowData']['Nombre']],
+        ['Icon' => '','Titulo' => 'Color',     'Texto' => '<span class="badge-sp1 badge-sp1-bg-info" style="background-color: '.$data['rowData']['ColorClaro'].';color: '.$data['rowData']['Color'].'; border: 1px solid '.$data['rowData']['Color'].';">'.$data['rowData']['Nombre'].'</span>'],
     ];
     $data['Fnc_WidgetsCommon']->responsiveTable($arrData, 8);
     ?>

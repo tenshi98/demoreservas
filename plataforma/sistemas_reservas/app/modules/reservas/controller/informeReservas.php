@@ -11,6 +11,7 @@ class informeReservas extends ControllerBase {
     private $DataDate;
     private $DataTime;
     private $DataNumbers;
+    private $CommonData;
 
     /******************************************************************************/
     //Constructor
@@ -25,6 +26,7 @@ class informeReservas extends ControllerBase {
 		$this->DataDate       = new FunctionsDataDate();
 		$this->DataTime       = new FunctionsDataTime();
 		$this->DataNumbers    = new FunctionsDataNumbers();
+		$this->CommonData     = new FunctionsCommonData();
         /*========== Datos para la clase padre ==========*/
         parent::__construct($DB_conn_1, $queryBuilder, $checkData);
     }
@@ -220,6 +222,7 @@ class informeReservas extends ControllerBase {
 
                 estados_listado.Nombre AS EstadoNombre,
                 estados_listado.Color AS EstadoColor,
+                estados_listado.ColorClaro AS EstadoColorClaro,
                 solicitantes_listado.Nombre AS SolicitanteNombre,
                 solicitantes_listado.ApellidoPat AS SolicitanteApellido,
                 solicitantes_listado.Email AS SolicitanteEmail,
@@ -259,10 +262,10 @@ class informeReservas extends ControllerBase {
                 'UserData'      => $this->getUserData($f3),
                 'UserAccess'    => $this->getArrLevel($f3, $this->controllerName),
                 /*===========   Funcionalidad   ===========*/
-                'Fnc_DataNumbers'     => $this->DataNumbers,
                 'Fnc_DataDate'        => $this->DataDate,
                 'Fnc_DataTime'        => $this->DataTime,
                 'Fnc_DataNumbers'     => $this->DataNumbers,
+                'Fnc_CommonData'      => $this->CommonData,
                 /*=========== Datos Consultados ===========*/
                 'arrList'       => $arrList['data'],
             ];

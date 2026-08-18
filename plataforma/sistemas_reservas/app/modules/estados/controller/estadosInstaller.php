@@ -296,7 +296,7 @@ class estadosInstaller extends ControllerBase {
         /*******************************************************/
         $arrTables[] = [
             'table'      => 'estados_listado',
-            'data'       => '`idEstadoReserva` int(10) unsigned NOT NULL AUTO_INCREMENT,`Nombre` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,`Color` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL',
+            'data'       => '`idEstadoReserva` int(10) unsigned NOT NULL AUTO_INCREMENT,`Nombre` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,`Color` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,`ColorClaro` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL',
             'primaryKey' => 'idEstadoReserva',
             'comentario' => 'Creado desde el Instalador',
         ];

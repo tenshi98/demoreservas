@@ -105,6 +105,7 @@ class reservasWidgets extends ControllerBase {
 
                     estados_listado.Nombre AS EstadoNombre,
                     estados_listado.Color AS EstadoColor,
+                    estados_listado.ColorClaro AS EstadoColorClaro,
                     solicitantes_listado.Nombre AS SolicitanteNombre,
                     solicitantes_listado.ApellidoPat AS SolicitanteApellido,
                     solicitantes_listado.Email AS SolicitanteEmail,
